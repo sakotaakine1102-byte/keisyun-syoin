@@ -310,6 +310,8 @@ main > h4::after, main > h5::after, main > h6::after,
   gap: 18px;
   flex-wrap: wrap;
   margin-top: 8px;
+  justify-content: center;
+  width: 100%;
 }
 .service-photos img {
   width: 280px;
