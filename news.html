@@ -1,39 +1,26 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
   <meta charset="utf-8">
-  <meta name="robots" content="noindex, nofollow">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>お知らせ・活動実績｜憬春書院｜大阪府河南町の書道教室</title>
-  <meta name="description" content="憬春書院からのお知らせ、生徒の作品、展覧会・受賞歴、教室の様子をご紹介します。">
-  <meta name="keywords" content="書道教室,憬春書院,河南町,南河内,大阪,生徒作品,展覧会,書道受賞">
-  <meta property="og:title" content="お知らせ・活動実績｜憬春書院">
-  <meta property="og:description" content="憬春書院からのお知らせ、生徒の作品、展覧会・受賞歴、教室の様子をご紹介します。">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="img/mainvisual.png">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-  <link rel="icon" href="img/憬.png" type="image/png">
+  <title>お知らせ・活動実績｜憬春書院</title>
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Sawarabi+Mincho&family=Material+Symbols+Outlined&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
     <div class="name">
-      <h1 class="hanko">
-        <span class="btn-hanko">憬春書院</span>
-      </h1>
+      <h1 class="hanko"><a href="index.html" class="btn-hanko">憬春書院</a></h1>
     </div>
     <div class="pc-menu">
       <nav>
         <ul>
-          <li><a href="index.html">ホーム</a></li>
           <li><a href="intro.html">教室紹介</a></li>
           <li><a href="profile.html">先生の紹介</a></li>
           <li><a href="resson.html">稽古について</a></li>
-          <li><a href="business.html">出張教室・看板揮毫</a></li>
+          <li><a href="business.html">出張教室について</a></li>
           <li><a href="news.html">お知らせ</a></li>
-          
+          <li><a href="form.html">アクセス・お問い合わせ</a></li>
         </ul>
       </nav>
     </div>
@@ -46,19 +33,18 @@
     <span class="material-symbols-outlined" id="close">close</span>
     <nav class="humberger">
       <ul>
-        <li><a href="index.html">ホーム</a></li>
-          <li><a href="intro.html">教室紹介</a></li>
+        <li><a href="intro.html">教室紹介</a></li>
         <li><a href="profile.html">先生の紹介</a></li>
         <li><a href="resson.html">稽古について</a></li>
-        <li><a href="business.html">出張教室・看板揮毫</a></li>
+        <li><a href="business.html">出張教室について</a></li>
         <li><a href="news.html">お知らせ</a></li>
-        
+        <li><a href="form.html">アクセス・お問い合わせ</a></li>
       </ul>
     </nav>
   </div>
 
   <main>
-    
+    <img src="img/tuuoudome.png" alt="" class="通行止め">
 
     <section class="news-section">
       <h2>お知らせ・活動実績</h2>
@@ -67,6 +53,10 @@
 
       <div class="oshirase" id="news-oshirase">
         <h3>お知らせ</h3>
+        <ul class="news-list"></ul>
+      </div>
+      <div class="oshirase" id="news-clender">
+        <h3>今月の予定</h3>
         <ul class="news-list"></ul>
       </div>
 
@@ -83,6 +73,7 @@
       <div class="situation" id="news-situation">
         <h3>教室の様子</h3>
         <ul class="news-list"></ul>
+        
       </div>
     </section>
 
@@ -105,36 +96,20 @@
           document.getElementById('news-loading').style.display = 'none';
 
           data.contents.forEach(item => {
-            const categoryName = Array.isArray(item.category)
-              ? item.category[0]
-              : item.category;
-
+            const categoryName = Array.isArray(item.category) ? item.category[0] : item.category;
             const containerId = categoryMap[categoryName];
             if (!containerId) return;
 
             const ul = document.querySelector(`#${containerId} .news-list`);
             if (!ul) return;
 
-            // 日付はお知らせのみ
-            const dateHtml = (categoryName === 'お知らせ')
-              ? `<time class="news-date">${new Date(item.date || item.publishedAt).toLocaleDateString('ja-JP')}</time>`
-              : '';
-
-            // 画像（デバッグ用ログ付き）
-            console.log(`[${item.title}] image フィールド:`, item.image);
-            const imagesHtml = (item.image && item.image.length > 0)
-              ? `<div class="news-images">${item.image.map(img =>
-                  `<img src="${img.url}" alt="" class="news-img">`
-                ).join('')}</div>`
-              : '';
-
+            const date = new Date(item.publishedAt).toLocaleDateString('ja-JP');
             const li = document.createElement('li');
             li.className = 'news-item';
             li.innerHTML = `
-              ${dateHtml}
-              ${item.title ? `<h4 class="news-title">${item.title}</h4>` : ''}
-              ${item.body ? `<div class="news-body">${item.body}</div>` : ''}
-              ${imagesHtml}
+              <time class="news-date">${date}</time>
+              <h4 class="news-title">${item.title}</h4>
+              <div class="news-body">${item.body || ''}</div>
             `;
             ul.appendChild(li);
           });
@@ -146,23 +121,20 @@
     </script>
   </main>
 
-  <script src="js/main.js"></script>
-
   <footer>
     <section class="section cta-section">
       <div class="cta-card">
         <h2>見学・体験、お気軽にどうぞ</h2>
-        <p>公式lineより、見学等を受け付けております。<br>教室の様子はinstagramをご覧ください。</p>
+        <p>公式LINEより、見学等を受け付けております。<br>教室の様子はInstagramをご覧ください。</p>
         <div class="cta-btns">
-          <a href="https://lin.ee/7ZwNKlZ" aria-label="LINE" target="_blank" rel="noopener"><img src="img/LINE_Brand_icon.png" alt="LINE" class="LINE"></a>
-          <a href="https://www.instagram.com/keishun_shoin?igsh=MXVwMjNncm42OHY0cA%3D%3D&utm_source=qr" target="_blank" rel="noopener">
-            <img src="img/Instagram_Glyph_Gradient.png" alt="instagram" class="SNS-icon">
-          </a>
+          <a href="form.html" aria-label="LINE"><img src="img/LINE_Brand_icon.png" alt="LINE" class="LINE"></a>
+          <a href="https://www.instagram.com/keishun_shoin?igsh=MXVwMjNncm42OHY0cA%3D%3D&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram"><img src="img/Instagram_Glyph_Gradient.png" alt="Instagram" class="SNS-icon"></a>
           <p class="copyright">©憬春書院</p>
         </div>
       </div>
     </section>
   </footer>
 
+  <script src="js/main.js"></script>
 </body>
 </html>
